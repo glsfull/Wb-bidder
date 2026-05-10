@@ -94,7 +94,13 @@
         >
           <article class="landing-card">
             <span class="icon-badge" aria-hidden="true">
-              <component :is="'svg'" viewBox="0 0 24 24" v-html="benefit.iconSvg" />
+              <svg viewBox="0 0 24 24">
+                <path
+                  v-for="path in benefit.iconPaths"
+                  :key="path.d"
+                  v-bind="path"
+                />
+              </svg>
             </span>
             <h3>{{ benefit.title }}</h3>
             <p>{{ benefit.text }}</p>
@@ -307,31 +313,107 @@ const benefits = [
     title: 'Полная автоматизация ставок',
     text: 'Сервис берёт на себя ежедневную рутину управления рекламными ставками Вайлдберриз.',
     href: '#ai-advisor',
-    iconSvg: '<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="currentColor" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>'
+    iconPaths: [
+      {
+        d: 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z',
+        stroke: 'currentColor',
+        fill: 'none',
+        'stroke-width': '1.8',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }
+    ]
   },
   {
     title: 'AI-советник с рекомендациями',
     text: 'Рекомендации строятся на вашей статистике, а не на усреднённых правилах.',
     href: '#ai-advisor',
-    iconSvg: '<rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 9h1l2 4 2-4h1" stroke="currentColor" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>'
+    iconPaths: [
+      {
+        d: 'M3 6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6z',
+        stroke: 'currentColor',
+        fill: 'none',
+        'stroke-width': '1.8',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      },
+      {
+        d: 'M9 9h1l2 4 2-4h1',
+        stroke: 'currentColor',
+        fill: 'none',
+        'stroke-width': '1.8',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }
+    ]
   },
   {
     title: 'Экономия бюджета до 30%',
     text: 'WB-Bidder выявляет перерасход и помогает сокращать рекламный бюджет рекламной кампании.',
     href: '#tariffs',
-    iconSvg: '<line x1="12" y1="1" x2="12" y2="23" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" stroke="currentColor" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>'
+    iconPaths: [
+      {
+        d: 'M12 1v22',
+        stroke: 'currentColor',
+        fill: 'none',
+        'stroke-width': '1.8',
+        'stroke-linecap': 'round'
+      },
+      {
+        d: 'M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6',
+        stroke: 'currentColor',
+        fill: 'none',
+        'stroke-width': '1.8',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }
+    ]
   },
   {
     title: 'Рост заказов',
     text: 'Ставки распределяются туда, где выше шанс получить заказ и удержать целевой ДРР.',
     href: '#tariffs',
-    iconSvg: '<polyline points="23 6 13.5 15.5 8.5 10.5 1 18" stroke="currentColor" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><polyline points="17 6 23 6 23 12" stroke="currentColor" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>'
+    iconPaths: [
+      {
+        d: 'M23 6 13.5 15.5 8.5 10.5 1 18',
+        stroke: 'currentColor',
+        fill: 'none',
+        'stroke-width': '1.8',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      },
+      {
+        d: 'M17 6h6v6',
+        stroke: 'currentColor',
+        fill: 'none',
+        'stroke-width': '1.8',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }
+    ]
   },
   {
     title: 'Безопасный автопилот',
     text: 'Автоматизация работает только с разрешения пользователя и сохраняет полный контроль.',
     href: '#contacts',
-    iconSvg: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><polyline points="9 12 11 14 15 10" stroke="currentColor" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>'
+    iconPaths: [
+      {
+        d: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',
+        stroke: 'currentColor',
+        fill: 'none',
+        'stroke-width': '1.8',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      },
+      {
+        d: 'm9 12 2 2 4-4',
+        stroke: 'currentColor',
+        fill: 'none',
+        'stroke-width': '1.8',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }
+    ]
   }
 ]
 
