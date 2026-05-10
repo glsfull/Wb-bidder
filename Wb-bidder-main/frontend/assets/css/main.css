@@ -3,6 +3,7 @@
   --bg: #f6f7f9;
   --surface: #ffffff;
   --surface-strong: #f8fafc;
+  --surface-soft: #eef2f7;
   --text: #111827;
   --muted: #5b6472;
   --line: #d7dce3;
@@ -18,6 +19,7 @@
     --bg: #121417;
     --surface: #1b1f24;
     --surface-strong: #222832;
+    --surface-soft: #17212b;
     --text: #f4f7fb;
     --muted: #a8b1bf;
     --line: #36404d;
@@ -58,14 +60,29 @@ a {
   gap: 12px;
   align-items: center;
   border-bottom: 1px solid var(--line);
-  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
   padding: 14px max(24px, calc((100vw - 1180px) / 2));
   backdrop-filter: blur(14px);
 }
 
 .app-header__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   font-weight: 900;
   text-decoration: none;
+}
+
+.app-header__brand::before {
+  display: inline-grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border-radius: 8px;
+  background: var(--primary);
+  color: #ffffff;
+  content: "WB";
+  font-size: 11px;
 }
 
 .app-nav,
@@ -92,7 +109,10 @@ a {
 }
 
 .header-actions a {
+  display: inline-grid;
   min-width: 42px;
+  min-height: 38px;
+  place-items: center;
   text-align: center;
 }
 
@@ -132,6 +152,7 @@ a {
 .landing-card,
 .advisor-note,
 .compare-card,
+.tariff-card,
 .contacts-section,
 .landing-footer {
   border: 1px solid var(--line);
@@ -188,6 +209,9 @@ a {
   align-content: space-between;
   min-height: 560px;
   overflow: hidden;
+  background:
+    radial-gradient(circle at 82% 18%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 30%),
+    linear-gradient(180deg, var(--surface), var(--surface-soft));
   padding: 28px;
 }
 
@@ -263,9 +287,24 @@ a {
   font-weight: 900;
 }
 
+.advisor-message {
+  display: grid;
+  gap: 8px;
+  border: 1px solid color-mix(in srgb, var(--accent) 42%, var(--line));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+  padding: 16px;
+}
+
+.advisor-message span {
+  color: var(--muted);
+  line-height: 1.45;
+}
+
 .landing-section h2,
 .advisor-section h2,
 .autopilot-section h2,
+.tariff-section h2,
 .contacts-section h2 {
   max-width: 860px;
   margin: 0 0 24px;
@@ -275,7 +314,8 @@ a {
 
 .step-grid,
 .benefit-grid,
-.compare-grid {
+.compare-grid,
+.tariff-grid {
   display: grid;
   gap: 16px;
 }
@@ -340,6 +380,39 @@ a {
 
 .compare-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.tariff-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.tariff-card {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  padding: 22px;
+}
+
+.tariff-card p {
+  margin: 0;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.tariff-card h3 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.tariff-card strong {
+  font-size: 28px;
+}
+
+.tariff-card span {
+  color: var(--muted);
+  line-height: 1.55;
 }
 
 .compare-card--active {
@@ -1000,6 +1073,7 @@ th {
   .benefit-grid,
   .advisor-section,
   .compare-grid,
+  .tariff-grid,
   .contacts-section,
   .account-hero,
   .onboarding-flow,
