@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { readFile } from 'node:fs/promises'
+import { access, readFile } from 'node:fs/promises'
 
 const requiredSections = [
   'public landing',
@@ -102,11 +102,22 @@ describe('frontend implementation scope', () => {
     expect(homePage.default).toContain('defineWebSite')
   })
 
-  it('documents the issue 16 delivery status file', async () => {
-    const statusFile = await readFile(new URL('../../333', import.meta.url), 'utf8')
+  it('keeps the Nuxt app configured for GitHub Pages static deployment', async () => {
+    const nuxtConfig = await import('../nuxt.config.ts?raw')
+    const workflow = await readFile(new URL('../../.github/workflows/nuxtjs.yml', import.meta.url), 'utf8')
 
-    expect(statusFile).toContain('issue #16')
-    expect(statusFile).toContain('Главная страница')
-    expect(statusFile).toContain('Скриншот')
+    expect(nuxtConfig.default).toContain("preset: 'static'")
+    expect(nuxtConfig.default).toContain("routes: ['/']")
+    expect(workflow).toContain('working-directory: frontend')
+    expect(workflow).toContain('cache-dependency-path: frontend/package-lock.json')
+    expect(workflow).toContain('npm run generate')
+    expect(workflow).toContain('frontend/.output/public')
+    expect(workflow).toContain('npx nuxi prepare')
+    expect(workflow).toContain('npm run lint')
+  })
+
+  it('does not keep legacy issue delivery artifacts at the repository root', async () => {
+    await expect(access(new URL('../../333', import.meta.url))).rejects.toThrow()
+    await expect(access(new URL('../../этап4.md', import.meta.url))).rejects.toThrow()
   })
 })

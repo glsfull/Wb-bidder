@@ -1,8 +1,16 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-01-01',
   srcDir: 'app/',
+  ssr: true,
   devtools: { enabled: true },
   modules: ['@nuxt/eslint', 'nuxt-schema-org', '@nuxtjs/google-fonts'],
+  nitro: {
+    preset: 'static',
+    prerender: {
+      crawlLinks: true,
+      routes: ['/']
+    }
+  },
   app: {
     head: {
       htmlAttrs: {
