@@ -32,6 +32,18 @@ const phaseFourBidderElements = [
   'queued-update state'
 ]
 
+const accountOnboardingElements = [
+  'phone registration field',
+  'email registration field',
+  'password registration field',
+  'wildberries api token field',
+  'marketing and promotion token validation',
+  'non-marketing token blocking error',
+  'seller info persistence',
+  'campaign import table',
+  'unavailable statistics marker'
+]
+
 describe('frontend implementation scope', () => {
   it('tracks the required first application areas', () => {
     expect(requiredSections).toContain('bidder workspace')
@@ -42,5 +54,11 @@ describe('frontend implementation scope', () => {
     expect(phaseFourBidderElements).toContain('inline bid editing')
     expect(phaseFourBidderElements).toContain('queued-update state')
     expect(phaseFourBidderElements).toHaveLength(18)
+  })
+
+  it('covers the issue 9 account onboarding flow', () => {
+    expect(accountOnboardingElements).toContain('marketing and promotion token validation')
+    expect(accountOnboardingElements).toContain('non-marketing token blocking error')
+    expect(accountOnboardingElements).toHaveLength(9)
   })
 })
