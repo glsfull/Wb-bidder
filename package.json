@@ -1,0 +1,17 @@
+{
+  "name": "wb-bidder",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "dev": "npm --prefix frontend run dev",
+    "build": "npm --prefix frontend run build",
+    "generate": "npm --prefix frontend run generate",
+    "preview": "npm --prefix frontend run preview",
+    "lint": "npm --prefix frontend run lint",
+    "test": "npm --prefix frontend run test",
+    "prepare:frontend": "cd frontend && npx nuxi prepare"
+  }
+}
