@@ -11,25 +11,35 @@
         </p>
       </div>
 
-      <form class="signup-panel" aria-label="Регистрация в личном кабинете">
-        <h2>Создать кабинет</h2>
+      <form id="registration-form" class="signup-panel" aria-label="Регистрация в личном кабинете">
+        <div class="signup-panel__header">
+          <p class="eyebrow">Шаг 1 из 4</p>
+          <h2>Создать кабинет</h2>
+        </div>
         <div class="form-grid">
           <label>
             Телефон
-            <input type="tel" value="+7 900 120-45-67" autocomplete="tel">
+            <input type="tel" placeholder="+7 900 120-45-67" autocomplete="tel">
           </label>
           <label>
             Email
-            <input type="email" value="owner@wb-bidder.ru" autocomplete="email">
+            <input type="email" placeholder="owner@wb-bidder.ru" autocomplete="email">
           </label>
           <label>
             Пароль
-            <input type="password" value="secure-password" autocomplete="new-password">
+            <input type="password" placeholder="Минимум 8 символов" autocomplete="new-password">
+          </label>
+          <label>
+            Название магазина
+            <input type="text" placeholder="ИП Иванов Е.Е." autocomplete="organization">
           </label>
         </div>
         <button class="button button--primary" type="button">
           Зарегистрироваться
         </button>
+        <p class="signup-panel__note">
+          После регистрации форма сразу переводит продавца к проверке API-токена.
+        </p>
       </form>
     </section>
 
@@ -49,16 +59,16 @@
     </section>
 
     <section class="section token-layout" aria-label="Проверка API токена">
-      <form class="token-panel">
+      <form id="token-form" class="token-panel">
         <div>
-          <p class="eyebrow">Wildberries API</p>
+          <p class="eyebrow">Шаг 2 из 4 · Wildberries API</p>
           <h2>Проверка токена</h2>
         </div>
         <label>
           API-токен
-          <textarea>{{ tokenPreview }}</textarea>
+          <textarea :value="tokenPreview" aria-describedby="token-validation"></textarea>
         </label>
-        <div class="token-result token-result--success">
+        <div id="token-validation" class="token-result token-result--success">
           <strong>Токен принят</strong>
           <span>Категория: Маркетинг и продвижение. Доступ к кампаниям разрешен.</span>
         </div>
