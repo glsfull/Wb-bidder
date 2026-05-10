@@ -1386,3 +1386,24 @@ th {
     display: none;
   }
 }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #0d1f12;
+    --surface: #122019;
+    --surface-strong: #1a2e21;
+    --surface-soft: #142319;
+    --text: #e8f5eb;
+    --muted: #8abf9a;
+    --line: #2a4a34;
+    --primary: #4caf76;
+    --primary-dark: #5cb87a;
+    --primary-light: #72c98f;
+    --accent: #5cb87a;
+    --accent-soft: #2a5c3a;
+    --focus: #4caf76;
+    --mint: #3d8c6c;
+    --pistachio: #5a9c4a;
+  }
+}
