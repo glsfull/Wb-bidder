@@ -3,50 +3,24 @@
     <header class="app-header">
       <NuxtLink class="app-header__brand" to="/">WB-Bidder</NuxtLink>
 
-      <nav class="app-nav" aria-label="Основная навигация">
-        <a href="/#features">Возможности</a>
-        <a href="/#ai-advisor">AI-советник</a>
-        <a href="/#tariffs">Тарифы</a>
-        <a href="/#contacts">Контакты</a>
-      </nav>
-
       <div class="header-actions" aria-label="Действия пользователя">
-        <a
-          href="/#registration-form"
-          class="header-icon-btn"
-          data-tooltip="Регистрация"
-          aria-label="Зарегистрироваться"
+        <button
+          type="button"
+          class="button button--secondary-dark"
+          aria-haspopup="dialog"
+          @click="openAuthModal('register')"
         >
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-            <circle cx="12" cy="7" r="4" />
-            <line x1="19" y1="8" x2="19" y2="14" />
-            <line x1="22" y1="11" x2="16" y2="11" />
-          </svg>
-        </a>
+          Регистрация
+        </button>
 
-        <NuxtLink
-          to="/dashboard"
-          class="header-icon-btn"
-          data-tooltip="Войти"
-          aria-label="Войти в личный кабинет"
+        <button
+          type="button"
+          class="button button--primary"
+          aria-haspopup="dialog"
+          @click="openAuthModal('login')"
         >
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-            <circle cx="12" cy="7" r="4" />
-          </svg>
-        </NuxtLink>
-
-        <a
-          href="/#contacts"
-          class="header-icon-btn"
-          data-tooltip="Контакты"
-          aria-label="Контакты и поддержка"
-        >
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.71 2.81a2 2 0 0 1-.45 2.11L7.91 8.77a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.91.35 1.85.58 2.81.71A2 2 0 0 1 21.73 16z" />
-          </svg>
-        </a>
+          Авторизация
+        </button>
 
         <button
           type="button"
@@ -76,11 +50,85 @@
     </header>
 
     <NuxtPage />
+
+    <Teleport to="body">
+      <div
+        v-if="authModal"
+        class="auth-modal"
+        role="dialog"
+        aria-modal="true"
+        :aria-labelledby="authModal === 'register' ? 'register-modal-title' : 'login-modal-title'"
+        @click.self="closeAuthModal"
+      >
+        <form class="auth-modal__panel" @submit.prevent>
+          <div class="auth-modal__header">
+            <div>
+              <p class="eyebrow">Административная часть</p>
+              <h2 :id="authModal === 'register' ? 'register-modal-title' : 'login-modal-title'">
+                {{ authModal === 'register' ? 'Регистрация администратора' : 'Авторизация администратора' }}
+              </h2>
+            </div>
+            <button
+              type="button"
+              class="auth-modal__close"
+              aria-label="Закрыть окно"
+              @click="closeAuthModal"
+            >
+              ×
+            </button>
+          </div>
+
+          <div v-if="authModal === 'register'" class="auth-modal__grid">
+            <label>
+              Телефон
+              <input type="tel" placeholder="+7 900 120-45-67" autocomplete="tel">
+            </label>
+            <label>
+              Email
+              <input type="email" placeholder="admin@wb-bidder.ru" autocomplete="email">
+            </label>
+            <label>
+              Пароль
+              <input type="password" placeholder="Минимум 8 символов" autocomplete="new-password">
+            </label>
+            <label>
+              Название магазина
+              <input type="text" placeholder="ИП Иванов Е.Е." autocomplete="organization">
+            </label>
+            <label class="auth-modal__wide">
+              API-токен Wildberries
+              <textarea placeholder="Токен категории Маркетинг и продвижение" />
+            </label>
+          </div>
+
+          <div v-else class="auth-modal__grid">
+            <label class="auth-modal__wide">
+              Email
+              <input type="email" placeholder="admin@wb-bidder.ru" autocomplete="email">
+            </label>
+            <label class="auth-modal__wide">
+              Пароль
+              <input type="password" placeholder="Ваш пароль" autocomplete="current-password">
+            </label>
+          </div>
+
+          <div class="auth-modal__footer">
+            <NuxtLink class="button button--secondary-dark" to="/dashboard" @click="closeAuthModal">
+              Открыть кабинет
+            </NuxtLink>
+            <button class="button button--primary" type="submit">
+              {{ authModal === 'register' ? 'Создать администратора' : 'Войти' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </Teleport>
   </div>
 </template>
 
 <script setup lang="ts">
 const isDark = ref(false)
+const authModal = ref<'register' | 'login' | null>(null)
 
 onMounted(() => {
   const stored = localStorage.getItem('theme')
@@ -95,5 +143,13 @@ function toggleTheme() {
   const theme = isDark.value ? 'dark' : 'light'
   document.documentElement.setAttribute('data-theme', theme)
   localStorage.setItem('theme', theme)
+}
+
+function openAuthModal(mode: 'register' | 'login') {
+  authModal.value = mode
+}
+
+function closeAuthModal() {
+  authModal.value = null
 }
 </script>
