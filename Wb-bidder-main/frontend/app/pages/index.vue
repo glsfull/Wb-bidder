@@ -52,6 +52,10 @@
             <dd>12 найдено</dd>
           </div>
         </dl>
+        <div class="advisor-message">
+          <strong>Рекомендация AI</strong>
+          <span>Снизить ставку по запросу «платье летнее» на 20% и удержать топ-3.</span>
+        </div>
       </aside>
     </section>
 
@@ -107,7 +111,20 @@
       </div>
     </section>
 
-    <section id="pricing" class="section autopilot-section" aria-labelledby="autopilot-title">
+    <section id="tariffs" class="section tariff-section" aria-labelledby="tariffs-title">
+      <p class="eyebrow">Тарифы</p>
+      <h2 id="tariffs-title">Тарифы для запуска AI-советника и автопилота</h2>
+      <div class="tariff-grid">
+        <article v-for="tariff in tariffs" :key="tariff.title" class="tariff-card">
+          <p>{{ tariff.label }}</p>
+          <h3>{{ tariff.title }}</h3>
+          <strong>{{ tariff.price }}</strong>
+          <span>{{ tariff.text }}</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="section autopilot-section" aria-labelledby="autopilot-title">
       <p class="eyebrow">Автопилот</p>
       <h2 id="autopilot-title">
         Полностью автоматическое управление ставками с вашего разрешения
@@ -328,6 +345,27 @@ const benefits = [
     icon: '✓',
     title: 'Безопасный автопилот',
     text: 'Автоматизация работает только с разрешения пользователя и сохраняет полный контроль.'
+  }
+]
+
+const tariffs = [
+  {
+    label: 'Старт',
+    title: 'AI-советник',
+    price: '0 ₽ на тест',
+    text: 'Рекомендации по ставкам и поиск перерасхода без автоприменения.'
+  },
+  {
+    label: 'Рост',
+    title: 'Автопилот',
+    price: 'от 4 900 ₽',
+    text: 'Автоматическое изменение ставок в лимитах продавца.'
+  },
+  {
+    label: 'Команда',
+    title: 'Контроль агентства',
+    price: 'индивидуально',
+    text: 'Несколько магазинов, отчеты и расширенные правила управления.'
   }
 ]
 </script>

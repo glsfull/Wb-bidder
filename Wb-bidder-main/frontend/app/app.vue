@@ -7,14 +7,20 @@
       <nav class="app-nav" aria-label="Основная навигация">
         <a href="/#features">Возможности</a>
         <a href="/#ai-advisor">AI-советник</a>
-        <a href="/#pricing">Тарифы</a>
+        <a href="/#tariffs">Тарифы</a>
         <a href="/#about">О сервисе</a>
         <a href="/#contacts">Контакты</a>
       </nav>
       <div class="header-actions" aria-label="Действия">
-        <a href="/#registration-form" title="Регистрация">👤+</a>
-        <NuxtLink to="/dashboard" title="Вход">👤</NuxtLink>
-        <a href="/#contacts" title="Контакты">☎</a>
+        <a href="/#registration-form" title="Регистрация" aria-label="Регистрация">
+          <span aria-hidden="true">＋</span>
+        </a>
+        <NuxtLink to="/dashboard" title="Вход" aria-label="Вход">
+          <span aria-hidden="true">◎</span>
+        </NuxtLink>
+        <a href="/#contacts" title="Контакты" aria-label="Контакты">
+          <span aria-hidden="true">✉</span>
+        </a>
       </div>
       <nav class="app-nav app-nav--secondary" aria-label="Разделы приложения">
         <a href="/#registration-form">Регистрация</a>

@@ -75,6 +75,7 @@ describe('frontend implementation scope', () => {
     expect(appShell.default).toContain('Регистрация')
     expect(appShell.default).toContain('Возможности')
     expect(appShell.default).toContain('AI-советник')
+    expect(appShell.default).toContain('Тарифы')
     expect(appShell.default).toContain('Контакты')
     expect(appShell.default).toContain('Светлая')
     expect(appShell.default).toContain('Темная')
@@ -92,10 +93,20 @@ describe('frontend implementation scope', () => {
     expect(homePage.default).toContain('Преимущества автоматического управления рекламой на Вайлдберриз')
     expect(homePage.default).toContain('AI-советник WB-Bidder — персональный аналитик для ваших рекламных ставок')
     expect(homePage.default).toContain('Полностью автоматическое управление ставками с вашего разрешения')
+    expect(homePage.default).toContain('Тарифы для запуска AI-советника и автопилота')
+    expect(homePage.default).toContain('Снизить ставку по запросу')
     expect(homePage.default).toContain('Контакты и адрес офиса WB-Bidder')
     expect(homePage.default).toContain('https://yandex.ru/map-widget')
     expect(homePage.default).toContain('defineOrganization')
     expect(homePage.default).toContain('defineBreadcrumb')
     expect(homePage.default).toContain('defineWebSite')
+  })
+
+  it('documents the issue 16 delivery status file', async () => {
+    const statusFile = await readFile(new URL('../../333', import.meta.url), 'utf8')
+
+    expect(statusFile).toContain('issue #16')
+    expect(statusFile).toContain('Главная страница')
+    expect(statusFile).toContain('Скриншот')
   })
 })
