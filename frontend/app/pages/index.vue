@@ -1,76 +1,82 @@
 <template>
-  <main class="landing-page">
-    <!-- Hero -->
+  <main class="landing-page landing-page--redesign">
+    <nav class="breadcrumbs" aria-label="Хлебные крошки">
+      <a href="/">Главная</a>
+      <span aria-hidden="true">/</span>
+      <span>AI-биддер Wildberries</span>
+    </nav>
+
     <section class="landing-hero" aria-labelledby="landing-title">
       <div class="landing-hero__copy">
-        <p class="eyebrow">AI-автопилот рекламы Wildberries</p>
+        <p class="eyebrow">WB-Bidder для рекламы Wildberries</p>
         <h1 id="landing-title">
-          Автоматическое управление рекламными ставками Wildberries — сервис WB-Bidder
+          Легкий AI-биддер для управления ставками Wildberries
         </h1>
         <p class="landing-hero__lead">
-          Ваш AI-советник для экономии бюджета и увеличения заказов.
-        </p>
-        <p>
-          WB-Bidder — умный биддер, полностью автоматизирующий управление рекламными
-          ставками на Wildberries. Подключите AI-советника, получайте готовые
-          рекомендации на основе вашей статистики и наблюдайте, как снижается
-          бюджет рекламной кампании, а количество заказов растёт. При вашем
-          желании сервис возьмёт управление ставками на себя — полностью
-          автоматически и безопасно.
+          WB-Bidder помогает продавцам видеть позиции, контролировать расходы и
+          принимать точные решения по рекламным ставкам без перегруженных таблиц.
         </p>
         <div class="hero-actions">
-          <a class="button button--primary" href="#tariffs">
-            Зарегистрироваться бесплатно
-          </a>
-          <a class="button button--secondary" href="#ai-advisor">
-            Попробовать AI-советника
+          <button class="button button--primary" type="button" @click="openHeaderAuth('register')">
+            Попробовать сейчас
+          </button>
+          <a class="button button--secondary-dark" href="/demo">
+            Смотреть демо
           </a>
         </div>
       </div>
 
-      <aside class="hero-dashboard" aria-label="Дашборд автоматического управления ставками">
-        <div class="advisor-orb" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="36" height="36" stroke="#fff" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M12 2a8 8 0 1 0 0 16A8 8 0 0 0 12 2z" />
-            <path d="M9 9h1l2 4 2-4h1" />
-          </svg>
-        </div>
-        <div class="hero-dashboard__header">
-          <span>Автопилот активен</span>
-          <strong>24/7 анализ данных</strong>
-        </div>
-        <div class="chart-lines" aria-hidden="true">
-          <span />
-          <span />
-          <span />
+      <aside class="hero-dashboard glass-panel" aria-label="Минималистичный дашборд ставок">
+        <div class="hero-dashboard__top">
+          <span>Сводка кампании</span>
+          <strong>Автопилот готов</strong>
         </div>
         <dl class="hero-stats">
           <div>
-            <dt>Экономия бюджета</dt>
-            <dd>до 30%</dd>
+            <dt>Просмотры</dt>
+            <dd>128k</dd>
           </div>
           <div>
-            <dt>Заказы</dt>
-            <dd>+18%</dd>
+            <dt>Средняя позиция</dt>
+            <dd>3.4</dd>
           </div>
           <div>
-            <dt>Завышенных ставок</dt>
-            <dd>12 найдено</dd>
+            <dt>Динамика ставок</dt>
+            <dd>-14%</dd>
           </div>
         </dl>
+        <div class="soft-chart" aria-hidden="true">
+          <span style="height: 44%" />
+          <span style="height: 58%" />
+          <span style="height: 52%" />
+          <span style="height: 76%" />
+          <span style="height: 66%" />
+          <span style="height: 84%" />
+        </div>
         <div class="advisor-message">
-          <strong>Рекомендация AI</strong>
-          <span>Снизить ставку по запросу «платье летнее» на 20% и удержать топ-3.</span>
+          <strong>AI-советник</strong>
+          <span>Снизить ставку на 14% и удержать показы в топ-5.</span>
         </div>
       </aside>
     </section>
 
-    <!-- How it works -->
-    <section id="features" class="section landing-section" aria-labelledby="workflow-title">
-      <p class="eyebrow">Процесс</p>
-      <h2 id="workflow-title">Как работает автоматизация ставок в WB-Bidder</h2>
+    <section id="features" class="section landing-section" aria-labelledby="features-title">
+      <p class="eyebrow">Возможности</p>
+      <h2 id="features-title">Три слоя контроля рекламных ставок</h2>
+      <div class="benefit-grid">
+        <article v-for="feature in features" :key="feature.title" class="landing-card">
+          <span class="icon-badge" aria-hidden="true">{{ feature.icon }}</span>
+          <h3>{{ feature.title }}</h3>
+          <p>{{ feature.text }}</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="ai-advisor" class="section landing-section" aria-labelledby="advisor-title">
+      <p class="eyebrow">Как работает AI-советник</p>
+      <h2 id="advisor-title">От данных Wildberries до безопасного изменения ставки</h2>
       <div class="step-grid">
-        <article v-for="step in workflowSteps" :key="step.title" class="landing-card">
+        <article v-for="step in workflowSteps" :key="step.title" class="landing-card step-card">
           <span class="icon-badge" aria-hidden="true">{{ step.icon }}</span>
           <h3>{{ step.title }}</h3>
           <p>{{ step.text }}</p>
@@ -78,178 +84,87 @@
       </div>
     </section>
 
-    <!-- Benefits -->
-    <section class="section landing-section" aria-labelledby="benefits-title">
-      <p class="eyebrow">Преимущества</p>
-      <h2 id="benefits-title">
-        Преимущества автоматического управления рекламой на Вайлдберриз
-      </h2>
-      <div class="benefit-grid">
-        <a
-          v-for="benefit in benefits"
-          :key="benefit.title"
-          :href="benefit.href"
-          class="benefit-card-link"
-          :aria-label="benefit.title"
-        >
-          <article class="landing-card">
-            <span class="icon-badge" aria-hidden="true">
-              <svg viewBox="0 0 24 24">
-                <path
-                  v-for="path in benefit.iconPaths"
-                  :key="path.d"
-                  v-bind="path"
-                />
-              </svg>
-            </span>
-            <h3>{{ benefit.title }}</h3>
-            <p>{{ benefit.text }}</p>
-          </article>
-        </a>
-      </div>
-    </section>
-
-    <!-- AI Advisor -->
-    <section id="ai-advisor" class="section advisor-section" aria-labelledby="advisor-title">
-      <div>
-        <p class="eyebrow">AI-советник</p>
-        <h2 id="advisor-title">
-          AI-советник WB-Bidder — персональный аналитик для ваших рекламных ставок
-        </h2>
-        <p>
-          Искусственный интеллект непрерывно анализирует эффективность каждого
-          объявления, выявляет перерасход и даёт точные корректировки. Например:
-          ставка по ключевому запросу завышена на 20% — предлагаем снизить,
-          сохранив лимиты и целевые позиции. Экономия бюджета рекламной кампании
-          достигает 30% уже в первый месяц.
-        </p>
-        <a class="button button--primary" href="#tariffs">
-          Попробовать AI-советника бесплатно
-        </a>
-      </div>
-      <div class="advisor-note">
-        <span class="icon-badge" aria-hidden="true">
-          <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="3" width="18" height="18" rx="3" />
-            <path d="M9 9h1l2 4 2-4h1" />
-          </svg>
-        </span>
-        <h3>Анализ статистики и рекомендации</h3>
-        <p>
-          AI советник ставки Wildberries сравнивает расходы, заказы, CTR, CPC и ДРР,
-          находит точки перерасхода и объясняет каждое изменение простым языком.
-        </p>
-        <h3>Экономия бюджета рекламной кампании</h3>
-        <p>
-          Персональные рекомендации помогают снизить расходы на рекламу и
-          перераспределить бюджет туда, где выше отдача.
-        </p>
-      </div>
-    </section>
-
-    <!-- Tariffs -->
-    <section id="tariffs" class="section tariff-section" aria-labelledby="tariffs-title">
-      <p class="eyebrow">Тарифы</p>
-      <h2 id="tariffs-title">Тарифы для запуска AI-советника и автопилота</h2>
-      <div class="tariff-grid">
-        <article v-for="tariff in tariffs" :key="tariff.title" class="tariff-card">
-          <p>{{ tariff.label }}</p>
-          <h3>{{ tariff.title }}</h3>
-          <strong>{{ tariff.price }}</strong>
-          <span>{{ tariff.text }}</span>
-          <a class="button button--primary" href="#contacts">Начать</a>
+    <section class="section landing-section" aria-labelledby="dashboards-title">
+      <p class="eyebrow">Реальные данные</p>
+      <h2 id="dashboards-title">Дашборды вместо тяжелых рекламных таблиц</h2>
+      <div class="metric-grid">
+        <article v-for="metric in metrics" :key="metric.title" class="metric-card glass-panel">
+          <span>{{ metric.title }}</span>
+          <strong>{{ metric.value }}</strong>
+          <p>{{ metric.text }}</p>
         </article>
       </div>
     </section>
 
-    <!-- Autopilot -->
-    <section class="section autopilot-section" aria-labelledby="autopilot-title">
-      <p class="eyebrow">Автопилот</p>
-      <h2 id="autopilot-title">
-        Полностью автоматическое управление ставками с вашего разрешения
-      </h2>
-      <div class="compare-grid">
-        <article class="compare-card">
-          <h3>Ручное управление</h3>
-          <p>
-            Менеджер ежедневно ищет перерасход, пересчитывает ставки и вручную
-            переносит изменения в кабинет Wildberries. Это время и деньги.
-          </p>
+    <section class="section landing-section" aria-labelledby="proof-title">
+      <p class="eyebrow">Социальное доказательство</p>
+      <h2 id="proof-title">Команды видят результат без ручной рутины</h2>
+      <div class="proof-grid">
+        <article class="case-card">
+          <p>«WB-Bidder убрал ежедневную проверку ставок из операционного дня и дал понятную картину по позициям.»</p>
+          <strong>Команда категории fashion</strong>
         </article>
-        <article class="compare-card compare-card--active">
-          <h3>Автоматическое изменение ставок</h3>
-          <p>
-            WB-Bidder работает в заданных вами лимитах, меняет ставки только после
-            разрешения и позволяет в любой момент изменить настройки или отключить
-            автопилот. Вы всегда сохраняете контроль.
-          </p>
-        </article>
-      </div>
-    </section>
-
-    <!-- Contacts -->
-    <section id="contacts" class="section contacts-section" aria-labelledby="contacts-title">
-      <div>
-        <p class="eyebrow">Контакты</p>
-        <h2 id="contacts-title">Контакты и адрес офиса WB-Bidder</h2>
-        <div class="contact-list">
-          <span class="contact-item">
-            <span class="contact-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z" />
-                <circle cx="12" cy="10" r="3" />
-              </svg>
-            </span>
-            ул. Примерная, д. 1, Москва, 123456
-          </span>
-
-          <a href="tel:+79991234567" class="contact-item">
-            <span class="contact-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.71 2.81a2 2 0 0 1-.45 2.11L7.91 8.77a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.91.35 1.85.58 2.81.71A2 2 0 0 1 21.73 16z" />
-              </svg>
-            </span>
-            +7 (999) 123-45-67
-          </a>
-
-          <a href="mailto:hello@wb-bidder.ru" class="contact-item">
-            <span class="contact-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                <polyline points="22,6 12,13 2,6" />
-              </svg>
-            </span>
-            hello@wb-bidder.ru
-          </a>
+        <div class="partner-logos" aria-label="Партнеры">
+          <span>Northline</span>
+          <span>MarketOps</span>
+          <span>Retail AI</span>
+          <span>SellerLab</span>
         </div>
       </div>
-      <iframe
-        title="Офис WB-Bidder на Яндекс.Картах"
-        src="https://yandex.ru/map-widget/v1/?ll=37.617700%2C55.755800&z=15&pt=37.617700,55.755800,pm2rdm"
-        loading="lazy"
-      />
     </section>
 
-    <!-- Footer -->
+    <section class="section token-section" aria-labelledby="token-title">
+      <div>
+        <p class="eyebrow">Быстрый старт</p>
+        <h2 id="token-title">После входа сервис попросит API-токен Wildberries</h2>
+        <p>
+          Токен нужен для чтения рекламной статистики и управления ставками в
+          заданных лимитах. Используйте стандартный ключ из кабинета Wildberries
+          с доступом к маркетингу и продвижению.
+        </p>
+        <a href="https://seller.wildberries.ru/supplier-settings/access-to-api" rel="noreferrer">
+          Настройки доступа к API Wildberries
+        </a>
+      </div>
+      <form class="token-card glass-panel" @submit.prevent>
+        <span class="icon-badge" aria-hidden="true">OK</span>
+        <label>
+          API-токен
+          <input type="password" placeholder="Вставьте стандартный ключ Wildberries">
+        </label>
+        <button class="button button--primary" type="button" @click="openHeaderAuth('login')">
+          Войти и подключить токен
+        </button>
+      </form>
+    </section>
+
     <footer id="about" class="landing-footer">
-      <nav aria-label="Хлебные крошки">
-        <a href="/">Главная</a>
+      <div>
+        <strong>WB-Bidder</strong>
+        <span>© 2026 WB-Bidder</span>
+      </div>
+      <nav aria-label="Ссылки футера">
+        <a href="/demo">Блог</a>
+        <a href="#features">Тарифы</a>
+        <a href="mailto:hello@wb-bidder.ru">Поддержка</a>
+        <a href="/privacy">Политика</a>
       </nav>
-      <strong>WB-Bidder</strong>
-      <span>© 2026 WB-Bidder</span>
-      <a href="/privacy">Политика конфиденциальности</a>
+      <div class="social-links" aria-label="Социальные сети">
+        <a href="https://t.me/wb_bidder" aria-label="Telegram">TG</a>
+        <a href="https://vk.com/wb_bidder" aria-label="VK">VK</a>
+      </div>
     </footer>
   </main>
 </template>
 
 <script setup lang="ts">
 useSeoMeta({
-  title: 'WB-Bidder — автоматическое управление ставками Wildberries',
+  title: 'WB-Bidder — AI-биддер для ставок Wildberries',
   description:
-    'WB-Bidder автоматизирует управление рекламными ставками Вайлдберриз, снижает бюджет рекламной кампании и помогает увеличивать заказы с AI-советником.',
-  ogTitle: 'WB-Bidder — AI-автопилот ставок Wildberries',
+    'WB-Bidder помогает продавцам Wildberries управлять рекламными ставками, анализировать SEO-позиции товаров и подключать AI-советник без перегруженных таблиц.',
+  ogTitle: 'WB-Bidder — легкий AI-биддер Wildberries',
   ogDescription:
-    'AI-советник анализирует статистику, предлагает корректировки и может управлять ставками в заданных лимитах.',
+    'Минималистичный сервис для анализа позиций, ставок, просмотров и безопасного автопилота рекламы Wildberries.',
   twitterCard: 'summary_large_image'
 })
 
@@ -276,6 +191,11 @@ useSchemaOrg([
         position: 1,
         name: 'Главная',
         item: 'https://wb-bidder.ru'
+      },
+      {
+        position: 2,
+        name: 'AI-биддер Wildberries',
+        item: 'https://wb-bidder.ru/#features'
       }
     ]
   }),
@@ -287,154 +207,81 @@ useSchemaOrg([
       target: 'https://wb-bidder.ru/search?q={search_term_string}',
       'query-input': 'required name=search_term_string'
     }
+  }),
+  defineSoftwareApp({
+    name: 'WB-Bidder',
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Web',
+    description:
+      'Автоматизированный сервис для управления рекламными ставками Wildberries с SEO-аналитикой товаров, визуализацией позиций и AI-советником.',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'RUB'
+    }
   })
 ])
+
+const features = [
+  {
+    icon: '◎',
+    title: 'SEO-аналитика товаров',
+    text: 'Собирайте запросы, позиции и точки роста карточек в одном легком интерфейсе.'
+  },
+  {
+    icon: '⌁',
+    title: 'Визуализация позиций и ставок',
+    text: 'Смотрите среднюю позицию, ставку и динамику без ручной сборки отчетов.'
+  },
+  {
+    icon: 'AI',
+    title: 'Обучаемый AI-биддер',
+    text: 'Советник запоминает цели кампаний и предлагает корректировки под вашу экономику.'
+  }
+]
 
 const workflowSteps = [
   {
     icon: '01',
-    title: 'Подключение кабинета Wildberries',
-    text: 'Продавец регистрируется, добавляет магазин и передаёт API-токен категории «Маркетинг и продвижение».'
+    title: 'Подключите магазин',
+    text: 'Авторизуйтесь в модальном окне и добавьте стандартный API-токен Wildberries.'
   },
   {
     icon: '02',
-    title: 'Анализ статистики и рекомендации',
-    text: 'AI непрерывно оценивает расходы, ставки, клики и заказы, чтобы показать понятные действия.'
+    title: 'Получите рекомендации',
+    text: 'AI сравнит просмотры, позиции, ставки и спрос по товарам.'
   },
   {
     icon: '03',
-    title: 'Автоматическое изменение ставок',
-    text: 'После согласия пользователя автопилот применяет корректировки в заданных лимитах.'
+    title: 'Примените лимиты',
+    text: 'Сервис меняет ставки только в заданных вами границах и показывает причину.'
   }
 ]
 
-const benefits = [
+const metrics = [
   {
-    title: 'Полная автоматизация ставок',
-    text: 'Сервис берёт на себя ежедневную рутину управления рекламными ставками Вайлдберриз.',
-    href: '#ai-advisor',
-    iconPaths: [
-      {
-        d: 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z',
-        stroke: 'currentColor',
-        fill: 'none',
-        'stroke-width': '1.8',
-        'stroke-linecap': 'round',
-        'stroke-linejoin': 'round'
-      }
-    ]
+    title: 'Просмотры',
+    value: '+22%',
+    text: 'Рост видимости карточек после перераспределения ставок.'
   },
   {
-    title: 'AI-советник с рекомендациями',
-    text: 'Рекомендации строятся на вашей статистике, а не на усреднённых правилах.',
-    href: '#ai-advisor',
-    iconPaths: [
-      {
-        d: 'M3 6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6z',
-        stroke: 'currentColor',
-        fill: 'none',
-        'stroke-width': '1.8',
-        'stroke-linecap': 'round',
-        'stroke-linejoin': 'round'
-      },
-      {
-        d: 'M9 9h1l2 4 2-4h1',
-        stroke: 'currentColor',
-        fill: 'none',
-        'stroke-width': '1.8',
-        'stroke-linecap': 'round',
-        'stroke-linejoin': 'round'
-      }
-    ]
+    title: 'Средняя позиция',
+    value: '3.4',
+    text: 'Контроль целевых мест по ключевым товарам.'
   },
   {
-    title: 'Экономия бюджета до 30%',
-    text: 'WB-Bidder выявляет перерасход и помогает сокращать рекламный бюджет рекламной кампании.',
-    href: '#tariffs',
-    iconPaths: [
-      {
-        d: 'M12 1v22',
-        stroke: 'currentColor',
-        fill: 'none',
-        'stroke-width': '1.8',
-        'stroke-linecap': 'round'
-      },
-      {
-        d: 'M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6',
-        stroke: 'currentColor',
-        fill: 'none',
-        'stroke-width': '1.8',
-        'stroke-linecap': 'round',
-        'stroke-linejoin': 'round'
-      }
-    ]
-  },
-  {
-    title: 'Рост заказов',
-    text: 'Ставки распределяются туда, где выше шанс получить заказ и удержать целевой ДРР.',
-    href: '#tariffs',
-    iconPaths: [
-      {
-        d: 'M23 6 13.5 15.5 8.5 10.5 1 18',
-        stroke: 'currentColor',
-        fill: 'none',
-        'stroke-width': '1.8',
-        'stroke-linecap': 'round',
-        'stroke-linejoin': 'round'
-      },
-      {
-        d: 'M17 6h6v6',
-        stroke: 'currentColor',
-        fill: 'none',
-        'stroke-width': '1.8',
-        'stroke-linecap': 'round',
-        'stroke-linejoin': 'round'
-      }
-    ]
-  },
-  {
-    title: 'Безопасный автопилот',
-    text: 'Автоматизация работает только с разрешения пользователя и сохраняет полный контроль.',
-    href: '#contacts',
-    iconPaths: [
-      {
-        d: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',
-        stroke: 'currentColor',
-        fill: 'none',
-        'stroke-width': '1.8',
-        'stroke-linecap': 'round',
-        'stroke-linejoin': 'round'
-      },
-      {
-        d: 'm9 12 2 2 4-4',
-        stroke: 'currentColor',
-        fill: 'none',
-        'stroke-width': '1.8',
-        'stroke-linecap': 'round',
-        'stroke-linejoin': 'round'
-      }
-    ]
+    title: 'Динамика ставок',
+    value: '-14%',
+    text: 'Снижение завышенных ставок без потери показов.'
   }
 ]
 
-const tariffs = [
-  {
-    label: 'Старт',
-    title: 'AI-советник',
-    price: '0 ₽ на тест',
-    text: 'Рекомендации по ставкам и поиск перерасхода без автоприменения.'
-  },
-  {
-    label: 'Рост',
-    title: 'Автопилот',
-    price: 'от 4 900 ₽',
-    text: 'Автоматическое изменение ставок в лимитах продавца.'
-  },
-  {
-    label: 'Команда',
-    title: 'Контроль агентства',
-    price: 'индивидуально',
-    text: 'Несколько магазинов, отчёты и расширенные правила управления.'
-  }
-]
+function openHeaderAuth(mode: 'register' | 'login') {
+  const label = mode === 'register' ? 'Регистрация' : 'Авторизация'
+  const authButton = Array.from(
+    document.querySelectorAll<HTMLButtonElement>('button[aria-haspopup="dialog"]')
+  ).find((button) => button.textContent?.trim() === label)
+
+  authButton?.click()
+}
 </script>
