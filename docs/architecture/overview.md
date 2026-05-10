@@ -6,12 +6,13 @@ WB Bidder is planned as a TypeScript-first SaaS application with Nuxt 3 on the f
 
 ```text
 frontend/                 Nuxt 3 application
+backend/                  NestJS application for private APIs and jobs
 docs/architecture/         Architecture decisions and diagrams
 docs/roadmap/              Delivery roadmap and phase plans
 README.md                  Product specification
 ```
 
-Future backend work should add a separate `backend/` workspace and shared tooling only when implementation starts.
+The backend workspace starts with store connection, token validation, encryption, audit, and sync enqueueing boundaries. Durable PostgreSQL repositories and BullMQ workers are planned for the synchronization phase.
 
 ## Frontend
 
@@ -125,4 +126,3 @@ Required telemetry:
 - Structured application logs with request, tenant, store, job, and correlation identifiers.
 - Metrics for Wildberries API latency, error rate, rate limits, queue depth, job duration, and bidder decisions.
 - Alerts for expired tokens, repeated sync failures, stuck queues, and unusual bid update failure rates.
-

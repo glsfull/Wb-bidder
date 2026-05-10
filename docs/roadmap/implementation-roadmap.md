@@ -52,6 +52,11 @@ Exit criteria:
 - Invalid tokens are never saved.
 - Valid tokens create a store and start the initial sync pipeline.
 
+Current implementation note:
+
+- The backend workspace now contains the first store connection service boundary, AES-256-GCM token encryption helper, audit service, in-memory store repository, and initial sync queue abstraction.
+- Persistence and BullMQ adapters remain intentionally deferred to Phase 3, where PostgreSQL schemas and queue workers are introduced.
+
 ## Phase 3. Synchronization and data model
 
 Goal: persist advertising account data and keep it current through queues.
@@ -142,4 +147,3 @@ Deliverables:
 Exit criteria:
 
 - The system can be operated, monitored, and supported as a SaaS product.
-
