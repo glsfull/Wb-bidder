@@ -1,5 +1,6 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-01-01',
+  srcDir: 'app/',
   devtools: { enabled: true },
   modules: ['@nuxt/eslint', 'nuxt-schema-org', '@nuxtjs/google-fonts'],
   app: {
@@ -25,7 +26,7 @@ export default defineNuxtConfig({
       ]
     }
   },
-  css: ['~/assets/css/main.css'],
+  css: ['~/../assets/css/main.css'],
   schemaOrg: {
     identity: {
       type: 'Organization',
