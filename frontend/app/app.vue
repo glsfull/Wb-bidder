@@ -51,8 +51,8 @@
         <button
           type="button"
           class="theme-toggle"
-          :data-tooltip="isDark ? 'Светлая тема' : 'Тёмная тема'"
-          :aria-label="isDark ? 'Переключить на светлую тему' : 'Переключить на тёмную тему'"
+          :data-tooltip="isDark ? 'Светлая тема' : 'Темная тема'"
+          :aria-label="isDark ? 'Переключить на светлую тему' : 'Переключить на темную тему'"
           @click="toggleTheme"
         >
           <!-- Sun icon for dark mode (click to go light) -->
