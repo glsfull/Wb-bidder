@@ -28,7 +28,8 @@ a {
 }
 
 .page,
-.dashboard {
+.dashboard,
+.account-page {
   min-height: 100vh;
 }
 
@@ -47,7 +48,8 @@ a {
 
 .hero__content,
 .section,
-.dashboard {
+.dashboard,
+.account-hero {
   width: min(1180px, calc(100% - 48px));
   margin: 0 auto;
 }
@@ -116,6 +118,11 @@ a {
   color: #ffffff;
 }
 
+.button--secondary-dark {
+  border-color: var(--line);
+  color: var(--text);
+}
+
 .button--ghost {
   border-color: var(--line);
   background: #ffffff;
@@ -132,6 +139,146 @@ a {
 
 .section h2 {
   margin: 0 0 24px;
+}
+
+.account-page {
+  padding: 32px 0 56px;
+}
+
+.account-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 430px;
+  gap: 24px;
+  align-items: stretch;
+}
+
+.account-hero__copy,
+.signup-panel,
+.token-panel,
+.seller-panel,
+.onboarding-step {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.account-hero__copy {
+  display: grid;
+  align-content: end;
+  min-height: 420px;
+  background:
+    linear-gradient(90deg, rgb(17 24 39 / 92%), rgb(17 24 39 / 48%)),
+    url("https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1800&q=80");
+  background-position: center;
+  background-size: cover;
+  color: #ffffff;
+  padding: 32px;
+}
+
+.account-hero__copy h1 {
+  margin: 0;
+  font-size: clamp(42px, 6vw, 78px);
+  line-height: 0.98;
+}
+
+.account-hero__copy p:not(.eyebrow) {
+  max-width: 680px;
+  margin: 22px 0 0;
+  color: rgb(255 255 255 / 86%);
+  font-size: 18px;
+  line-height: 1.55;
+}
+
+.signup-panel,
+.token-panel,
+.seller-panel {
+  display: grid;
+  gap: 18px;
+  padding: 24px;
+}
+
+.signup-panel h2,
+.token-panel h2,
+.seller-panel h2,
+.onboarding-step h2 {
+  margin: 0;
+}
+
+.form-grid,
+.token-panel label {
+  display: grid;
+  gap: 12px;
+}
+
+.form-grid label,
+.token-panel label {
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.onboarding-flow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.onboarding-step {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 14px;
+  padding: 18px;
+}
+
+.onboarding-step span {
+  color: var(--primary);
+  font-weight: 900;
+}
+
+.onboarding-step p,
+.seller-panel dt {
+  color: var(--muted);
+}
+
+.token-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 16px;
+}
+
+textarea {
+  min-height: 116px;
+  resize: vertical;
+}
+
+.token-result {
+  display: grid;
+  gap: 4px;
+  border-radius: 8px;
+  padding: 14px;
+}
+
+.token-result--success {
+  border: 1px solid #99f6e4;
+  background: #f0fdfa;
+  color: #115e59;
+}
+
+.token-result--error {
+  border: 1px solid #fecaca;
+  background: #fff1f2;
+  color: #991b1b;
+}
+
+.seller-panel dl {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+}
+
+.seller-panel dd {
+  margin: 4px 0 0;
+  font-weight: 800;
 }
 
 .feature-grid {
@@ -213,6 +360,10 @@ a {
   gap: 16px;
 }
 
+.workspace--wide {
+  grid-template-columns: 1fr;
+}
+
 .campaigns,
 .bidder-panel {
   min-width: 0;
@@ -256,6 +407,12 @@ a {
   padding: 6px 10px;
   font-size: 13px;
   font-weight: 800;
+}
+
+.status--ok {
+  border-color: #99f6e4;
+  background: #f0fdfa;
+  color: #115e59;
 }
 
 .ops-topbar {
@@ -393,6 +550,15 @@ input {
   font: inherit;
 }
 
+textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 10px 12px;
+  color: var(--text);
+  font: inherit;
+}
+
 .table-wrap {
   max-width: 100%;
   overflow-x: auto;
@@ -448,6 +614,9 @@ th {
 
 @media (max-width: 860px) {
   .feature-grid,
+  .account-hero,
+  .onboarding-flow,
+  .token-layout,
   .metrics,
   .ops-topbar,
   .workspace,
@@ -473,7 +642,8 @@ th {
 @media (max-width: 520px) {
   .hero__content,
   .section,
-  .dashboard {
+  .dashboard,
+  .account-hero {
     width: min(100% - 32px, 1180px);
   }
 
