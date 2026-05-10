@@ -19,7 +19,7 @@
           автоматически и безопасно.
         </p>
         <div class="hero-actions">
-          <a class="button button--primary" href="#registration-form">
+          <a class="button button--primary" href="#tariffs">
             Зарегистрироваться бесплатно
           </a>
           <a class="button button--secondary" href="#ai-advisor">
@@ -117,7 +117,7 @@
           сохранив лимиты и целевые позиции. Экономия бюджета рекламной кампании
           достигает 30% уже в первый месяц.
         </p>
-        <a class="button button--primary" href="#registration-form">
+        <a class="button button--primary" href="#tariffs">
           Попробовать AI-советника бесплатно
         </a>
       </div>
@@ -151,7 +151,7 @@
           <h3>{{ tariff.title }}</h3>
           <strong>{{ tariff.price }}</strong>
           <span>{{ tariff.text }}</span>
-          <a class="button button--primary" href="#registration-form">Начать</a>
+          <a class="button button--primary" href="#contacts">Начать</a>
         </article>
       </div>
     </section>
@@ -179,83 +179,6 @@
           </p>
         </article>
       </div>
-    </section>
-
-    <!-- Registration -->
-    <section id="registration" class="section account-hero" aria-labelledby="account-title">
-      <div class="account-hero__copy">
-        <p class="eyebrow">Личный кабинет WB-Bidder</p>
-        <h2 id="account-title">Регистрация продавца</h2>
-        <p>
-          Пользователь создаёт кабинет, подключает API-токен Wildberries категории
-          «Маркетинг и продвижение», затем сервис загружает продавца и рекламные
-          кампании в рабочий экран.
-        </p>
-      </div>
-
-      <form id="registration-form" class="signup-panel" aria-label="Регистрация в личном кабинете" @submit.prevent>
-        <div class="signup-panel__header">
-          <p class="eyebrow">Шаг 1 из 4</p>
-          <h2>Создать кабинет</h2>
-        </div>
-        <div class="form-grid">
-          <label>
-            Телефон
-            <input type="tel" placeholder="+7 900 120-45-67" autocomplete="tel">
-          </label>
-          <label>
-            Email
-            <input type="email" placeholder="owner@wb-bidder.ru" autocomplete="email">
-          </label>
-          <label>
-            Пароль
-            <input type="password" placeholder="Минимум 8 символов" autocomplete="new-password">
-          </label>
-          <label>
-            Название магазина
-            <input type="text" placeholder="ИП Иванов Е.Е." autocomplete="organization">
-          </label>
-        </div>
-        <button class="button button--primary" type="submit">
-          Зарегистрироваться
-        </button>
-      </form>
-    </section>
-
-    <!-- Token verification -->
-    <section class="section token-layout" aria-label="Проверка API токена">
-      <form id="token-form" class="token-panel" @submit.prevent>
-        <div>
-          <p class="eyebrow">Шаг 2 из 4 · Wildberries API</p>
-          <h2>Проверка токена</h2>
-        </div>
-        <label>
-          API-токен
-          <textarea :value="tokenPreview" aria-describedby="token-validation" />
-        </label>
-        <div id="token-validation" class="token-result token-result--success">
-          <strong>Токен принят</strong>
-          <span>Категория: Маркетинг и продвижение. Доступ к кампаниям разрешён.</span>
-        </div>
-      </form>
-
-      <aside class="seller-panel" aria-label="Полученные данные продавца">
-        <p class="eyebrow">Данные кабинета</p>
-        <h2>ИП Иванов Е.Е.</h2>
-        <dl>
-          <div>
-            <dt>Seller ID</dt>
-            <dd>seller-783014</dd>
-          </div>
-          <div>
-            <dt>Статус</dt>
-            <dd>Кампании выгружены</dd>
-          </div>
-        </dl>
-        <NuxtLink class="button button--secondary-dark" to="/dashboard">
-          Открыть кампании
-        </NuxtLink>
-      </aside>
     </section>
 
     <!-- Contacts -->
@@ -361,8 +284,6 @@ useSchemaOrg([
   })
 ])
 
-const tokenPreview = 'eyJhbGciOi...marketing-promotion-token'
-
 const workflowSteps = [
   {
     icon: '01',
@@ -409,7 +330,7 @@ const benefits = [
   {
     title: 'Безопасный автопилот',
     text: 'Автоматизация работает только с разрешения пользователя и сохраняет полный контроль.',
-    href: '#registration-form',
+    href: '#contacts',
     iconSvg: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><polyline points="9 12 11 14 15 10" stroke="currentColor" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>'
   }
 ]
