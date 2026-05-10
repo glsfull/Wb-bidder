@@ -2,12 +2,30 @@
   color-scheme: light;
   --bg: #f6f7f9;
   --surface: #ffffff;
+  --surface-strong: #f8fafc;
   --text: #111827;
   --muted: #5b6472;
   --line: #d7dce3;
   --primary: #8d1f2d;
   --primary-dark: #6f1722;
   --accent: #0f766e;
+  --focus: #2563eb;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --bg: #121417;
+    --surface: #1b1f24;
+    --surface-strong: #222832;
+    --text: #f4f7fb;
+    --muted: #a8b1bf;
+    --line: #36404d;
+    --primary: #e44b5f;
+    --primary-dark: #f06476;
+    --accent: #2dd4bf;
+    --focus: #60a5fa;
+  }
 }
 
 * {
@@ -25,6 +43,57 @@ body {
 
 a {
   color: inherit;
+}
+
+.app-shell {
+  min-height: 100vh;
+}
+
+.app-header {
+  position: sticky;
+  z-index: 10;
+  top: 0;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  padding: 14px max(24px, calc((100vw - 1180px) / 2));
+  backdrop-filter: blur(14px);
+}
+
+.app-header__brand {
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.app-nav,
+.theme-switcher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.app-nav a,
+.theme-switcher button {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text);
+  padding: 8px 10px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.app-nav a.router-link-active,
+.theme-switcher button[aria-pressed="true"] {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: #ffffff;
 }
 
 .page,
@@ -142,12 +211,12 @@ a {
 }
 
 .account-page {
-  padding: 32px 0 56px;
+  padding: 24px 0 56px;
 }
 
 .account-hero {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 430px;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 430px);
   gap: 24px;
   align-items: stretch;
 }
@@ -195,6 +264,22 @@ a {
   display: grid;
   gap: 18px;
   padding: 24px;
+}
+
+.signup-panel {
+  align-content: start;
+}
+
+.signup-panel__header {
+  display: grid;
+  gap: 4px;
+}
+
+.signup-panel__note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.45;
 }
 
 .signup-panel h2,
@@ -559,6 +644,22 @@ textarea {
   font: inherit;
 }
 
+input,
+textarea,
+select {
+  background: var(--surface);
+}
+
+input:focus,
+textarea:focus,
+select:focus,
+.button:focus-visible,
+.app-nav a:focus-visible,
+.theme-switcher button:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--focus) 36%, transparent);
+  outline-offset: 2px;
+}
+
 .table-wrap {
   max-width: 100%;
   overflow-x: auto;
@@ -627,6 +728,11 @@ th {
     grid-template-columns: 1fr;
   }
 
+  .app-header {
+    grid-template-columns: 1fr;
+    padding-inline: 16px;
+  }
+
   .campaigns,
   .bidder-panel {
     width: 100%;
@@ -654,5 +760,16 @@ th {
 
   .button {
     width: 100%;
+  }
+
+  .app-nav,
+  .theme-switcher {
+    width: 100%;
+  }
+
+  .app-nav a,
+  .theme-switcher button {
+    flex: 1 1 140px;
+    text-align: center;
   }
 }

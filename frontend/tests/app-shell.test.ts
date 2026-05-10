@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { readFile } from 'node:fs/promises'
 
 const requiredSections = [
   'public landing',
@@ -36,6 +37,10 @@ const accountOnboardingElements = [
   'phone registration field',
   'email registration field',
   'password registration field',
+  'store name registration field',
+  'persistent registration navigation',
+  'light theme variant',
+  'dark theme variant',
   'wildberries api token field',
   'marketing and promotion token validation',
   'non-marketing token blocking error',
@@ -59,6 +64,20 @@ describe('frontend implementation scope', () => {
   it('covers the issue 9 account onboarding flow', () => {
     expect(accountOnboardingElements).toContain('marketing and promotion token validation')
     expect(accountOnboardingElements).toContain('non-marketing token blocking error')
-    expect(accountOnboardingElements).toHaveLength(9)
+    expect(accountOnboardingElements).toHaveLength(13)
+  })
+
+  it('keeps registration reachable from the application shell', async () => {
+    const appShell = await import('../app/app.vue?raw')
+    const homePage = await import('../app/pages/index.vue?raw')
+    const css = await readFile(new URL('../assets/css/main.css', import.meta.url), 'utf8')
+
+    expect(appShell.default).toContain('Регистрация')
+    expect(appShell.default).toContain('Светлая')
+    expect(appShell.default).toContain('Темная')
+    expect(homePage.default).toContain('id="registration-form"')
+    expect(homePage.default).toContain('autocomplete="organization"')
+    expect(homePage.default).toContain('id="token-form"')
+    expect(css).toContain('prefers-color-scheme: dark')
   })
 })
