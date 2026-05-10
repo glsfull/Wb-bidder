@@ -10,7 +10,7 @@
     "build": "npm --prefix frontend run build",
     "generate": "npm --prefix frontend run generate",
     "preview": "npm --prefix frontend run preview",
-    "lint": "npm --prefix frontend run lint",
+    "lint": "npm run prepare:frontend && npm --prefix frontend run lint",
     "test": "npm --prefix frontend run test",
     "prepare:frontend": "cd frontend && npx nuxi prepare"
   }

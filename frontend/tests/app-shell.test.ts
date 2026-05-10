@@ -114,7 +114,7 @@ describe('frontend implementation scope', () => {
     expect(nuxtConfig.default).toContain("routes: ['/']")
     expect(rootPackageJson).toContain('"generate": "npm --prefix frontend run generate"')
     expect(rootPackageJson).toContain('"test": "npm --prefix frontend run test"')
-    expect(rootPackageJson).toContain('"lint": "npm --prefix frontend run lint"')
+    expect(rootPackageJson).toContain('"lint": "npm run prepare:frontend && npm --prefix frontend run lint"')
     expect(rootPackageJson).toContain('"prepare:frontend": "cd frontend && npx nuxi prepare"')
     expect(packageJson).toContain('"node": ">=24.0.0"')
     expect(workflow).toContain('node-version: "24"')
@@ -137,6 +137,18 @@ describe('frontend implementation scope', () => {
     expect(checksWorkflow).not.toContain('18.x')
     expect(checksWorkflow).not.toContain('20.x')
     expect(checksWorkflow).not.toContain('npx webpack')
+  })
+
+  it('verifies the generated static homepage deploy artifact', async () => {
+    const generatedHomePage = await readFile(
+      new URL('../.output/public/index.html', import.meta.url),
+      'utf8'
+    )
+
+    expect(generatedHomePage).toContain('<!DOCTYPE html>')
+    expect(generatedHomePage).toContain('Автоматическое управление рекламными ставками Wildberries')
+    expect(generatedHomePage).toContain('WB-Bidder')
+    expect(generatedHomePage).toContain('AI-советник')
   })
 
   it('does not keep legacy issue delivery artifacts at the repository root', async () => {
