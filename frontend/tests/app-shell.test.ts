@@ -158,4 +158,26 @@ describe('frontend implementation scope', () => {
     await expect(access(new URL('../../333', import.meta.url))).rejects.toThrow()
     await expect(access(new URL('../../этап4.md', import.meta.url))).rejects.toThrow()
   })
+
+  it('keeps the implementation roadmap actionable and trackable by phase', async () => {
+    const roadmap = await readFile(
+      new URL('../../docs/roadmap/implementation-roadmap.md', import.meta.url),
+      'utf8'
+    )
+
+    expect(roadmap).toContain('# Дорожная карта WB Bidder')
+    expect(roadmap).toContain('## Как отмечать выполнение')
+    expect(roadmap).toContain('## Сводка прогресса')
+    expect(roadmap).toContain('| Фаза | Статус | Выполнение | Контрольный результат |')
+    expect(roadmap).toContain('## Журнал выполненных работ')
+    expect(roadmap).toContain('- [x] Подготовить архитектурный обзор')
+    expect(roadmap).toContain('- [ ] Заполнить дату завершения после приемки')
+
+    const phaseHeadings = roadmap.match(/^## Фаза \d+\./gm) ?? []
+    expect(phaseHeadings).toHaveLength(9)
+
+    for (const requiredMarker of ['- [x]', '- [ ]', '**Статус:**', '**Контрольный результат:**']) {
+      expect(roadmap).toContain(requiredMarker)
+    }
+  })
 })

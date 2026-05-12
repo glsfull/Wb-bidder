@@ -1,149 +1,177 @@
-# WB Bidder implementation roadmap
+# Дорожная карта WB Bidder
 
-This roadmap splits the technical specification into delivery phases. Each phase should leave the product in a reviewable state with documented behavior, tests, and a deployable increment.
+Документ переводит техническое задание в поэтапный план выполнения. Каждый этап содержит чеклист задач, понятный контрольный результат и место для отметки факта завершения.
 
-## Phase 0. Product and architecture foundation
+## Как отмечать выполнение
 
-Goal: define the project structure, target architecture, delivery order, and first frontend workspace.
+- `[ ]` - задача запланирована и еще не завершена.
+- `[x]` - задача выполнена, проверена и отражена в pull request.
+- Статус фазы обновляется вручную: `Запланировано`, `В работе`, `На проверке`, `Готово`.
+- После закрытия задачи в issue или pull request нужно отметить соответствующий чекбокс в фазе и добавить строку в журнал выполненных работ.
+- Фаза считается готовой только после выполнения всех чекбоксов и проверки контрольного результата.
 
-Deliverables:
+## Сводка прогресса
 
-- Architecture overview for frontend, backend, data, queues, integrations, and security.
-- Entity model and bounded contexts for stores, campaigns, bidder strategies, analytics, recommendations, users, and audit events.
-- Nuxt 3 frontend workspace under `frontend/`.
-- Initial product surface for the public landing page and operator dashboard shell.
-- Environment and quality gates for future implementation.
+| Фаза | Статус | Выполнение | Контрольный результат |
+| --- | --- | --- | --- |
+| 0. Основа продукта и архитектуры | В работе | 5/7 | Команда может начинать разработку без повторного толкования ТЗ |
+| 1. Публичный сайт и onboarding | В работе | 4/8 | Пользователь регистрируется и попадает в приватную оболочку |
+| 2. Подключение магазина и токены | В работе | 6/9 | Валидный токен сохраняется зашифрованно и запускает первичную синхронизацию |
+| 3. Синхронизация и модель данных | Запланировано | 0/8 | Кампании, баланс и статистика регулярно синхронизируются |
+| 4. Операционный экран биддера | В работе | 4/10 | Оператор управляет кампаниями, ставками, лимитами и действиями с одного экрана |
+| 5. Создание кампаний | Запланировано | 0/7 | Кампания создается через мастер и входит в цикл синхронизации |
+| 6. Автоматизация биддера | Запланировано | 0/8 | Решения биддера объяснимы, аудируемы и безопасно применяются |
+| 7. Аналитика, AI-советник и отчеты | Запланировано | 0/7 | Рекомендации привязаны к метрикам и конкретному действию |
+| 8. Команда, биллинг и production hardening | Запланировано | 0/8 | Сервис готов к коммерческой SaaS-эксплуатации |
 
-Exit criteria:
+## Фаза 0. Основа продукта и архитектуры
 
-- The team can start backend and frontend implementation without reinterpreting the specification.
-- All major Wildberries integration and security assumptions are documented.
+**Статус:** В работе  
+**Цель:** определить структуру проекта, архитектуру, порядок поставки и стартовую frontend/backend основу.  
+**Контрольный результат:** команда может начинать backend и frontend разработку без повторного толкования спецификации.
 
-## Phase 1. Public site and onboarding
+- [x] Подготовить полное техническое задание в `README.md`.
+- [x] Подготовить архитектурный обзор в `docs/architecture/overview.md`.
+- [x] Описать целевую структуру репозитория: `frontend/`, `backend/`, `docs/architecture/`, `docs/roadmap/`.
+- [x] Создать Nuxt frontend workspace.
+- [x] Создать NestJS backend workspace с первыми доменными границами.
+- [ ] Зафиксировать ADR для ключевых решений: PostgreSQL, Redis, BullMQ, AES-256-GCM, Wildberries API.
+- [ ] Добавить карту зависимостей между фазами и критическими блокерами.
 
-Goal: create the public entry point and account registration flow.
+## Фаза 1. Публичный сайт и onboarding
 
-Deliverables:
+**Статус:** В работе  
+**Цель:** создать публичную точку входа и поток регистрации.  
+**Контрольный результат:** пользователь может зарегистрироваться, авторизоваться и войти в приватную оболочку.
 
-- SSR/SSG landing page with SEO metadata, OpenGraph, Twitter Cards, and Schema.org markup.
-- Registration, login, email confirmation, password reset, refresh-token sessions, and role-aware account model.
-- Static legal and support pages.
-- First automated frontend tests for landing and auth flows.
+- [x] Реализовать SSR/SSG landing page на Nuxt.
+- [x] Добавить SEO metadata, OpenGraph, Twitter Cards и Schema.org.
+- [x] Подготовить регистрацию и авторизацию в оболочке приложения.
+- [x] Добавить статическую страницу политики конфиденциальности.
+- [ ] Реализовать подтверждение email.
+- [ ] Реализовать сброс пароля.
+- [ ] Реализовать refresh-token сессии и ролевую модель.
+- [ ] Добавить автоматические frontend-тесты на полный auth flow.
 
-Exit criteria:
+## Фаза 2. Подключение магазина и безопасная работа с токенами
 
-- A user can register, authenticate, and enter the private application shell.
-- Public pages meet Core Web Vitals targets in production-like builds.
+**Статус:** В работе  
+**Цель:** подключать магазин Wildberries через OAuth при доступности или вручную через токен категории `Продвижение`.  
+**Контрольный результат:** невалидные токены не сохраняются, валидный токен создает магазин и запускает первичную синхронизацию.
 
-## Phase 2. Store connection and secure token handling
+- [x] Создать backend boundary для подключения магазина.
+- [x] Добавить проверку Wildberries token category.
+- [x] Запретить сохранение невалидных токенов.
+- [x] Реализовать AES-256-GCM helper для шифрования токенов.
+- [x] Добавить audit service для действий с токенами и магазинами.
+- [x] Добавить первичное enqueue-событие синхронизации.
+- [ ] Подключить durable persistence вместо in-memory repository.
+- [ ] Добавить OAuth flow, если Wildberries предоставляет стабильный сценарий.
+- [ ] Отобразить статус первичной синхронизации в приватном UI.
 
-Goal: connect a Wildberries store through OAuth where available or a manual promotion API token.
+## Фаза 3. Синхронизация и модель данных
 
-Deliverables:
+**Статус:** Запланировано  
+**Цель:** хранить рекламные данные и регулярно обновлять их через очереди.  
+**Контрольный результат:** кампании, баланс и статистика синхронизируются повторно и доступны в dashboard.
 
-- Store creation flow.
-- Wildberries token validation with clear category-specific errors.
-- Encrypted token persistence using AES-256-GCM with envelope-encryption-ready boundaries.
-- Audit trail for token and store actions.
-- Initial sync job enqueueing after successful connection.
+- [ ] Спроектировать PostgreSQL schema для users, teams, stores, campaigns, products, phrases, metrics, sync runs и audit events.
+- [ ] Реализовать repositories и migrations.
+- [ ] Подключить Redis + BullMQ.
+- [ ] Разделить очереди profile, balance, campaign, statistics, bidder, parser, AI reports и maintenance.
+- [ ] Реализовать retry, rate limit и partial-failure handling для Wildberries API.
+- [ ] Нормализовать ошибки API и токенов.
+- [ ] Добавить sync status в private UI.
+- [ ] Покрыть sync lifecycle backend-тестами.
 
-Exit criteria:
+## Фаза 4. Операционный экран биддера
 
-- Invalid tokens are never saved.
-- Valid tokens create a store and start the initial sync pipeline.
+**Статус:** В работе  
+**Цель:** сделать главный рабочий экран для ежедневного управления рекламой.  
+**Контрольный результат:** оператор может просматривать кампании, редактировать ставки и лимиты, применять ручные действия и видеть очереди обновления.
 
-Current implementation note:
+- [x] Подготовить dashboard shell.
+- [x] Добавить навигацию по приватным разделам.
+- [x] Зафиксировать scope экрана биддера в frontend-тестах.
+- [x] Добавить визуальный прототип phase 4 dashboard.
+- [ ] Реализовать верхнюю панель: магазин, период, статус синхронизации, баланс, ручное обновление.
+- [ ] Реализовать фильтры кампаний и статус стратегии.
+- [ ] Реализовать карточку товара и зоны показов.
+- [ ] Реализовать inline-редактирование ставок, min/max, шага изменения и дневного лимита.
+- [ ] Реализовать таблицу фраз/кластеров с KPI и действиями.
+- [ ] Реализовать состояния: loading, empty, expired token, unsupported campaign, disabled bidder, queued update.
 
-- The backend workspace now contains the first store connection service boundary, AES-256-GCM token encryption helper, audit service, in-memory store repository, and initial sync queue abstraction.
-- Persistence and BullMQ adapters remain intentionally deferred to Phase 3, where PostgreSQL schemas and queue workers are introduced.
+## Фаза 5. Создание кампаний
 
-## Phase 3. Synchronization and data model
+**Статус:** Запланировано  
+**Цель:** создать мастер запуска рекламной кампании.  
+**Контрольный результат:** валидная кампания создается и сразу входит в цикл синхронизации.
 
-Goal: persist advertising account data and keep it current through queues.
+- [ ] Реализовать шаг выбора магазина.
+- [ ] Реализовать шаг выбора товаров.
+- [ ] Реализовать выбор типа кампании и модели оплаты.
+- [ ] Реализовать выбор фраз или кластеров.
+- [ ] Реализовать бюджет, дневной лимит и стратегию биддера.
+- [ ] Добавить предпросмотр и отправку.
+- [ ] Добавить валидации минимального бюджета, диапазона ставок, доступности товара и дублей активных сценариев.
 
-Deliverables:
+## Фаза 6. Автоматизация биддера
 
-- PostgreSQL schema for users, teams, stores, campaigns, products, phrases, metrics, sync runs, and audit events.
-- Redis + BullMQ queues for profile, balance, campaign, statistics, bidder, parser, and AI report tasks.
-- Retry, rate limit, and partial-failure handling for Wildberries APIs.
-- Sync status visible in the private UI.
+**Статус:** Запланировано  
+**Цель:** реализовать безопасное автоматическое принятие решений по ставкам.  
+**Контрольный результат:** решения биддера объяснимы, аудируемы и могут применяться или симулироваться в dry-run.
 
-Exit criteria:
+- [ ] Реализовать конфигурацию стратегий удержания позиции.
+- [ ] Реализовать контроль CPO/ДРР.
+- [ ] Реализовать защиту бюджета и сценарии масштабирования.
+- [ ] Реализовать decision engine с min/max, bid step, daily limit и dry-run.
+- [ ] Добавить scheduled BullMQ jobs.
+- [ ] Записывать decision audit records до применения внешних изменений.
+- [ ] Добавить ручной override.
+- [ ] Добавить emergency stop.
 
-- Campaign, balance, and statistics data can be synced repeatedly and inspected from the dashboard.
+## Фаза 7. Аналитика, AI-советник и отчеты
 
-## Phase 4. Operational bidder screen
+**Статус:** Запланировано  
+**Цель:** превращать метрики в понятные рекомендации и отчеты.  
+**Контрольный результат:** каждая рекомендация привязана к кампании, фразе, метрикам и конкретному действию.
 
-Goal: deliver the main working screen described in the specification.
+- [ ] Реализовать аналитические views по spend, orders, revenue, CPO, ДРР, CTR, CPC/CPM.
+- [ ] Добавить анализ динамики кампаний.
+- [ ] Реализовать AI recommendation model: expected effect, risk, explanation, apply action.
+- [ ] Добавить daily reports.
+- [ ] Добавить on-demand reports.
+- [ ] Реализовать export CSV.
+- [ ] Реализовать export XLSX.
 
-Deliverables:
+## Фаза 8. Команда, биллинг и production hardening
 
-- Store, period, sync, and balance top bar.
-- Campaign filters and strategy status.
-- Product card, placement-zone controls, inline bid editing, limits, and validation.
-- Phrase and cluster table with KPI columns and actions.
-- Loading, empty, expired-token, unsupported-campaign, disabled-bidder, and queued-update states.
+**Статус:** Запланировано  
+**Цель:** подготовить сервис к коммерческой многопользовательской эксплуатации.  
+**Контрольный результат:** систему можно эксплуатировать, мониторить и поддерживать как SaaS.
 
-Exit criteria:
+- [ ] Реализовать роли owner, manager, analyst и admin.
+- [ ] Реализовать invitations и tenant-scoped authorization.
+- [ ] Добавить биллинг и тарифные ограничения.
+- [ ] Добавить observability: logs, metrics, traces, dashboards и alerts.
+- [ ] Добавить backup, retention и privacy procedures.
+- [ ] Подготовить incident-response runbooks.
+- [ ] Провести load testing.
+- [ ] Провести security testing.
 
-- Operators can review campaigns, edit bids and limits, and apply manual actions from one screen.
+## Журнал выполненных работ
 
-## Phase 5. Campaign creation
+| Дата | Issue/PR | Фаза | Что отмечено |
+| --- | --- | --- | --- |
+| 2026-05-12 | #35 / #37 | Все фазы | Дорожная карта переведена в чеклист с фазами, статусами, сводкой прогресса и правилами отметки выполнения |
+| 2026-05-12 | #35 / #37 | Все фазы | Добавлен тест, который защищает структуру дорожной карты от возврата к неотслеживаемому списку |
 
-Goal: support campaign creation through a guided wizard.
+## Шаблон отметки завершения
 
-Deliverables:
+Использовать при закрытии задачи или этапа:
 
-- Store, product, type, payment model, phrase, budget, strategy, preview, and submit steps.
-- Validation for minimum budgets, bid ranges, product eligibility, and duplicate active scenarios.
-- Post-create synchronization.
-
-Exit criteria:
-
-- A valid campaign can be created and immediately enters the sync lifecycle.
-
-## Phase 6. Bidder automation
-
-Goal: implement automated bid strategy execution.
-
-Deliverables:
-
-- Strategy configuration for position holding, CPO/DRR control, budget protection, and scale-up scenarios.
-- Decision engine with bounded bid changes, min/max limits, step changes, daily limits, and dry-run mode.
-- Scheduled BullMQ jobs and decision audit records.
-- Manual override and emergency stop controls.
-
-Exit criteria:
-
-- Bidder decisions are explainable, auditable, and can be applied or simulated safely.
-
-## Phase 7. Analytics, AI advisor, and reports
-
-Goal: turn collected metrics into actionable recommendations.
-
-Deliverables:
-
-- Analytics views for spend, orders, revenue, CPO, DRR, CTR, CPC/CPM, phrase performance, and campaign dynamics.
-- AI recommendation model with expected effect, risk, explanation, and apply action.
-- Daily and on-demand reports.
-- Export to CSV/XLSX.
-
-Exit criteria:
-
-- Recommendations are tied to campaign, phrase, current metrics, and a concrete action.
-
-## Phase 8. Team, billing, reliability, and production hardening
-
-Goal: prepare the service for multi-tenant production use.
-
-Deliverables:
-
-- Team roles: owner, manager, analyst, admin.
-- Billing and tariff limits for stores, campaigns, refresh frequency, and AI quotas.
-- Observability: logs, metrics, traces, job dashboards, API error dashboards, and alerts.
-- Backup, retention, privacy, and incident-response procedures.
-- Load and security testing.
-
-Exit criteria:
-
-- The system can be operated, monitored, and supported as a SaaS product.
+- [ ] Заполнить дату завершения после приемки.
+- [ ] Указать issue или pull request.
+- [ ] Отметить выполненный чекбокс в нужной фазе.
+- [ ] Обновить счетчик выполнения в сводке прогресса.
+- [ ] Добавить короткую запись в журнал выполненных работ.
