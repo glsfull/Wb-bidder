@@ -61,6 +61,36 @@ describe('frontend implementation scope', () => {
     expect(phaseFourBidderElements).toHaveLength(18)
   })
 
+  it('documents the implementation roadmap as a phased checklist', async () => {
+    const roadmap = await readFile(
+      new URL('../../docs/roadmap/implementation-roadmap.md', import.meta.url),
+      'utf8'
+    )
+
+    expect(roadmap).toContain('## Progress legend')
+    expect(roadmap).toContain('- [x] Complete')
+    expect(roadmap).toContain('- [ ] Planned')
+    expect(roadmap).toContain('## Phase progress')
+    expect(roadmap).toContain('| Phase | Status | Current checkpoint | Next checkpoint |')
+    expect(roadmap).toContain('| Phase 0 | [x] Complete |')
+    expect(roadmap).toContain('| Phase 3 | [ ] Planned |')
+    expect(roadmap).toContain('Execution checklist:')
+    expect(roadmap).toContain('- [x] Create Nuxt 3 frontend workspace under `frontend/`.')
+    expect(roadmap).toContain('- [ ] Add PostgreSQL schema for users, teams, stores, campaigns, products, phrases, metrics, sync runs, and audit events.')
+  })
+
+  it('shows the phased delivery map in the dashboard shell', async () => {
+    const dashboardPage = await import('../app/pages/dashboard.vue?raw')
+
+    expect(dashboardPage.default).toContain('Карта выполнения задач')
+    expect(dashboardPage.default).toContain('deliveryPhases')
+    expect(dashboardPage.default).toContain('v-for="phase in deliveryPhases"')
+    expect(dashboardPage.default).toContain('phase.completed')
+    expect(dashboardPage.default).toContain('Phase 0')
+    expect(dashboardPage.default).toContain('Phase 4')
+    expect(dashboardPage.default).toContain('Следующий шаг')
+  })
+
   it('covers the issue 9 account onboarding flow', () => {
     expect(accountOnboardingElements).toContain('marketing and promotion token validation')
     expect(accountOnboardingElements).toContain('non-marketing token blocking error')

@@ -2,17 +2,39 @@
 
 This roadmap splits the technical specification into delivery phases. Each phase should leave the product in a reviewable state with documented behavior, tests, and a deployable increment.
 
+## Progress legend
+
+- [x] Complete: delivered and covered by local checks.
+- [~] In progress: started and tracked by the current implementation phase.
+- [ ] Planned: not started yet or intentionally deferred to a later phase.
+
+## Phase progress
+
+| Phase | Status | Current checkpoint | Next checkpoint |
+| --- | --- | --- | --- |
+| Phase 0 | [x] Complete | Architecture, roadmap, frontend workspace, landing shell, and dashboard shell are present. | Keep documentation aligned with implementation changes. |
+| Phase 1 | [~] In progress | Public landing, privacy page, auth modal shell, and static deployment checks are present. | Implement real auth endpoints, session rotation, and email flows. |
+| Phase 2 | [~] In progress | Store service boundary, token validation, encrypted token helper, audit service, and initial sync queue abstraction are present. | Replace in-memory adapters with persistent storage and worker-backed queues. |
+| Phase 3 | [ ] Planned | Data model is documented. | Add PostgreSQL schemas, migrations, repositories, and sync worker contracts. |
+| Phase 4 | [~] In progress | Dashboard campaign table and bidder-facing status shell are present. | Add full bidder workspace controls, edit validation, table actions, and error states. |
+| Phase 5 | [ ] Planned | Wizard scope is defined. | Build guided campaign creation flow and submit lifecycle. |
+| Phase 6 | [ ] Planned | Automation strategy scope is defined. | Implement decision engine, dry-run mode, audit records, and scheduled jobs. |
+| Phase 7 | [ ] Planned | Analytics and AI advisor scope is defined. | Add recommendation model, reports, and export flows. |
+| Phase 8 | [ ] Planned | Production hardening scope is defined. | Add billing, observability, backup, retention, and security test coverage. |
+
 ## Phase 0. Product and architecture foundation
 
 Goal: define the project structure, target architecture, delivery order, and first frontend workspace.
 
 Deliverables:
 
-- Architecture overview for frontend, backend, data, queues, integrations, and security.
-- Entity model and bounded contexts for stores, campaigns, bidder strategies, analytics, recommendations, users, and audit events.
-- Nuxt 3 frontend workspace under `frontend/`.
-- Initial product surface for the public landing page and operator dashboard shell.
-- Environment and quality gates for future implementation.
+Execution checklist:
+
+- [x] Document architecture overview for frontend, backend, data, queues, integrations, and security.
+- [x] Define entity model and bounded contexts for stores, campaigns, bidder strategies, analytics, recommendations, users, and audit events.
+- [x] Create Nuxt 3 frontend workspace under `frontend/`.
+- [x] Add initial product surface for the public landing page and operator dashboard shell.
+- [x] Configure environment and quality gates for future implementation.
 
 Exit criteria:
 
@@ -25,10 +47,13 @@ Goal: create the public entry point and account registration flow.
 
 Deliverables:
 
-- SSR/SSG landing page with SEO metadata, OpenGraph, Twitter Cards, and Schema.org markup.
-- Registration, login, email confirmation, password reset, refresh-token sessions, and role-aware account model.
-- Static legal and support pages.
-- First automated frontend tests for landing and auth flows.
+Execution checklist:
+
+- [x] Add SSR/SSG landing page with SEO metadata, OpenGraph, Twitter Cards, and Schema.org markup.
+- [~] Add registration and login shell in the application header.
+- [ ] Implement email confirmation, password reset, refresh-token sessions, and role-aware account model.
+- [x] Add static legal and support pages.
+- [x] Add first automated frontend tests for landing and auth flows.
 
 Exit criteria:
 
@@ -41,11 +66,14 @@ Goal: connect a Wildberries store through OAuth where available or a manual prom
 
 Deliverables:
 
-- Store creation flow.
-- Wildberries token validation with clear category-specific errors.
-- Encrypted token persistence using AES-256-GCM with envelope-encryption-ready boundaries.
-- Audit trail for token and store actions.
-- Initial sync job enqueueing after successful connection.
+Execution checklist:
+
+- [~] Build store creation flow service boundary.
+- [x] Add Wildberries token validation with clear category-specific errors.
+- [x] Add encrypted token persistence helper using AES-256-GCM with envelope-encryption-ready boundaries.
+- [x] Add audit trail boundary for token and store actions.
+- [x] Add initial sync job enqueueing after successful connection.
+- [ ] Connect service boundary to persistent repositories and production queue adapters.
 
 Exit criteria:
 
@@ -63,10 +91,12 @@ Goal: persist advertising account data and keep it current through queues.
 
 Deliverables:
 
-- PostgreSQL schema for users, teams, stores, campaigns, products, phrases, metrics, sync runs, and audit events.
-- Redis + BullMQ queues for profile, balance, campaign, statistics, bidder, parser, and AI report tasks.
-- Retry, rate limit, and partial-failure handling for Wildberries APIs.
-- Sync status visible in the private UI.
+Execution checklist:
+
+- [ ] Add PostgreSQL schema for users, teams, stores, campaigns, products, phrases, metrics, sync runs, and audit events.
+- [ ] Add Redis + BullMQ queues for profile, balance, campaign, statistics, bidder, parser, and AI report tasks.
+- [ ] Add retry, rate limit, and partial-failure handling for Wildberries APIs.
+- [~] Keep sync status visible in the private UI.
 
 Exit criteria:
 
@@ -78,11 +108,13 @@ Goal: deliver the main working screen described in the specification.
 
 Deliverables:
 
-- Store, period, sync, and balance top bar.
-- Campaign filters and strategy status.
-- Product card, placement-zone controls, inline bid editing, limits, and validation.
-- Phrase and cluster table with KPI columns and actions.
-- Loading, empty, expired-token, unsupported-campaign, disabled-bidder, and queued-update states.
+Execution checklist:
+
+- [~] Add store, period, sync, and balance top bar.
+- [~] Add campaign filters and strategy status.
+- [ ] Add product card, placement-zone controls, inline bid editing, limits, and validation.
+- [ ] Add phrase and cluster table with KPI columns and actions.
+- [ ] Add loading, empty, expired-token, unsupported-campaign, disabled-bidder, and queued-update states.
 
 Exit criteria:
 
@@ -94,9 +126,11 @@ Goal: support campaign creation through a guided wizard.
 
 Deliverables:
 
-- Store, product, type, payment model, phrase, budget, strategy, preview, and submit steps.
-- Validation for minimum budgets, bid ranges, product eligibility, and duplicate active scenarios.
-- Post-create synchronization.
+Execution checklist:
+
+- [ ] Add store, product, type, payment model, phrase, budget, strategy, preview, and submit steps.
+- [ ] Add validation for minimum budgets, bid ranges, product eligibility, and duplicate active scenarios.
+- [ ] Add post-create synchronization.
 
 Exit criteria:
 
@@ -108,10 +142,12 @@ Goal: implement automated bid strategy execution.
 
 Deliverables:
 
-- Strategy configuration for position holding, CPO/DRR control, budget protection, and scale-up scenarios.
-- Decision engine with bounded bid changes, min/max limits, step changes, daily limits, and dry-run mode.
-- Scheduled BullMQ jobs and decision audit records.
-- Manual override and emergency stop controls.
+Execution checklist:
+
+- [ ] Add strategy configuration for position holding, CPO/DRR control, budget protection, and scale-up scenarios.
+- [ ] Add decision engine with bounded bid changes, min/max limits, step changes, daily limits, and dry-run mode.
+- [ ] Add scheduled BullMQ jobs and decision audit records.
+- [ ] Add manual override and emergency stop controls.
 
 Exit criteria:
 
@@ -123,10 +159,12 @@ Goal: turn collected metrics into actionable recommendations.
 
 Deliverables:
 
-- Analytics views for spend, orders, revenue, CPO, DRR, CTR, CPC/CPM, phrase performance, and campaign dynamics.
-- AI recommendation model with expected effect, risk, explanation, and apply action.
-- Daily and on-demand reports.
-- Export to CSV/XLSX.
+Execution checklist:
+
+- [ ] Add analytics views for spend, orders, revenue, CPO, DRR, CTR, CPC/CPM, phrase performance, and campaign dynamics.
+- [ ] Add AI recommendation model with expected effect, risk, explanation, and apply action.
+- [ ] Add daily and on-demand reports.
+- [ ] Add export to CSV/XLSX.
 
 Exit criteria:
 
@@ -138,11 +176,13 @@ Goal: prepare the service for multi-tenant production use.
 
 Deliverables:
 
-- Team roles: owner, manager, analyst, admin.
-- Billing and tariff limits for stores, campaigns, refresh frequency, and AI quotas.
-- Observability: logs, metrics, traces, job dashboards, API error dashboards, and alerts.
-- Backup, retention, privacy, and incident-response procedures.
-- Load and security testing.
+Execution checklist:
+
+- [ ] Add team roles: owner, manager, analyst, admin.
+- [ ] Add billing and tariff limits for stores, campaigns, refresh frequency, and AI quotas.
+- [ ] Add observability: logs, metrics, traces, job dashboards, API error dashboards, and alerts.
+- [ ] Add backup, retention, privacy, and incident-response procedures.
+- [ ] Add load and security testing.
 
 Exit criteria:
 

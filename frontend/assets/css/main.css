@@ -1193,7 +1193,8 @@ textarea {
 .feature,
 .metric,
 .campaigns,
-.bidder-panel {
+.bidder-panel,
+.roadmap-panel {
   border: 1px solid var(--line);
   border-radius: 10px;
   background: var(--surface);
@@ -1221,7 +1222,8 @@ textarea {
 }
 
 .dashboard__header,
-.bidder-panel__header {
+.bidder-panel__header,
+.roadmap-panel__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1270,9 +1272,81 @@ textarea {
 }
 
 .campaigns,
-.bidder-panel {
+.bidder-panel,
+.roadmap-panel {
   min-width: 0;
   padding: 20px;
+}
+
+.roadmap-panel {
+  display: grid;
+  gap: 18px;
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto 16px;
+}
+
+.roadmap-panel h2 {
+  margin: 0;
+}
+
+.delivery-map {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.delivery-map__item {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-strong);
+  padding: 12px;
+}
+
+.delivery-map__item--complete {
+  border-color: color-mix(in srgb, var(--accent) 52%, var(--line));
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+}
+
+.delivery-map__item--active {
+  border-color: color-mix(in srgb, var(--primary) 44%, var(--line));
+}
+
+.delivery-map__marker {
+  display: inline-grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--primary);
+  font-weight: 900;
+}
+
+.delivery-map__item strong,
+.delivery-map__item p,
+.delivery-map__item small {
+  display: block;
+}
+
+.delivery-map__item p {
+  margin: 6px 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.delivery-map__item small {
+  color: var(--primary-dark);
+  font-weight: 800;
+  line-height: 1.35;
 }
 
 .campaign {
@@ -1565,6 +1639,7 @@ th {
   .metrics,
   .ops-topbar,
   .workspace,
+  .delivery-map,
   .bid-controls,
   .placement-grid,
   .state-grid,
@@ -1591,12 +1666,14 @@ th {
   }
 
   .campaigns,
-  .bidder-panel {
+  .bidder-panel,
+  .roadmap-panel {
     width: 100%;
   }
 
   .dashboard__header,
-  .bidder-panel__header {
+  .bidder-panel__header,
+  .roadmap-panel__header {
     align-items: flex-start;
     flex-direction: column;
   }
@@ -1606,6 +1683,7 @@ th {
   .hero__content,
   .section,
   .dashboard,
+  .roadmap-panel,
   .account-hero,
   .landing-hero,
   .breadcrumbs,
