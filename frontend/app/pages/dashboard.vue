@@ -29,6 +29,34 @@
       </div>
     </section>
 
+    <section class="roadmap-panel" aria-labelledby="roadmap-title">
+      <div class="roadmap-panel__header">
+        <div>
+          <p class="eyebrow">Дорожная карта</p>
+          <h2 id="roadmap-title">Карта выполнения задач</h2>
+        </div>
+        <span class="status status--ok">Следующий шаг: Phase 3</span>
+      </div>
+
+      <ol class="delivery-map">
+        <li
+          v-for="phase in deliveryPhases"
+          :key="phase.id"
+          class="delivery-map__item"
+          :class="{ 'delivery-map__item--complete': phase.completed, 'delivery-map__item--active': phase.active }"
+        >
+          <span class="delivery-map__marker" aria-hidden="true">
+            {{ phase.completed ? '✓' : phase.active ? '…' : '' }}
+          </span>
+          <div>
+            <strong>{{ phase.id }} · {{ phase.title }}</strong>
+            <p>{{ phase.checkpoint }}</p>
+            <small>Следующий шаг: {{ phase.next }}</small>
+          </div>
+        </li>
+      </ol>
+    </section>
+
     <section class="workspace workspace--wide">
       <section class="bidder-panel" aria-label="Выгруженные рекламные кампании">
         <div class="bidder-panel__header">
@@ -128,6 +156,49 @@ const campaigns = [
     orders: '3',
     drr: '32.4%',
     bid: '210 ₽'
+  }
+]
+
+const deliveryPhases = [
+  {
+    id: 'Phase 0',
+    title: 'Основа продукта',
+    checkpoint: 'Архитектура, фронтенд-воркспейс и базовый интерфейс готовы.',
+    next: 'Поддерживать документацию синхронно с изменениями.',
+    completed: true,
+    active: false
+  },
+  {
+    id: 'Phase 1',
+    title: 'Публичный сайт и вход',
+    checkpoint: 'Лендинг, SEO, статические страницы и auth-shell добавлены.',
+    next: 'Подключить реальные auth endpoints и сессии.',
+    completed: false,
+    active: true
+  },
+  {
+    id: 'Phase 2',
+    title: 'Подключение магазина',
+    checkpoint: 'Валидация токена, шифрование, аудит и очередь синхронизации описаны в backend.',
+    next: 'Заменить in-memory адаптеры постоянным хранилищем.',
+    completed: false,
+    active: true
+  },
+  {
+    id: 'Phase 3',
+    title: 'Синхронизация данных',
+    checkpoint: 'Схема данных и очереди запланированы.',
+    next: 'Добавить PostgreSQL schema, миграции и worker contracts.',
+    completed: false,
+    active: false
+  },
+  {
+    id: 'Phase 4',
+    title: 'Экран биддера',
+    checkpoint: 'Таблица кампаний и статусы синхронизации видны в кабинете.',
+    next: 'Добавить редактирование ставок, лимиты, фразы и состояния ошибок.',
+    completed: false,
+    active: true
   }
 ]
 </script>
